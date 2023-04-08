@@ -1,21 +1,26 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { setBalance } from "../store";
+import { useSelector } from "react-redux";
 
 const BalanceBoard = () => {
-    const dispatch = useDispatch();
-    const { balance } = useSelector((state) => {
-        return state.transaction;
+    const totalBalance = useSelector(({ transaction: { data } }) => {
+        // data.income.reduce((acc, init) => (acc += init.amount));
     });
 
-    useEffect(() => {
-        dispatch(setBalance());
-    }, [dispatch]);
-
     return (
-        <div>
-            <div>YOUR BALANCE</div>
-            <div className="text-lg font-bold">${balance}</div>
+        <div className="w-full">
+            <div>
+                <div className="text-sm">YOUR BALANCE</div>
+                <div className="text-xl font-bold m-0">${totalBalance}</div>
+            </div>
+            <div className="flex flex-row justify-between shadow-md">
+                <div className="flex flex-col items-center">
+                    <div className="text-xs font-bold">INCOME</div>
+                    <div></div>
+                </div>
+                <div className="flex flex-col items-center">
+                    <div className="text-xs font-bold">EXPENSE</div>
+                    <div></div>
+                </div>
+            </div>
         </div>
     );
 };

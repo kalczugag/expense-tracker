@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeTitle, changeAmount, addTransaction } from "../store";
+import { changeTitle, changeAmount, addIncome, addExpense } from "../store";
 import Button from "./Button";
 
 const TransactionForm = () => {
@@ -16,20 +16,22 @@ const TransactionForm = () => {
     };
 
     const handleAmountChange = (event) => {
-        dispatch(changeAmount(event.target.value || 0));
+        dispatch(changeAmount(parseInt(event.target.value)) || 0);
     };
 
     const handleSumbit = (event) => {
         event.preventDefault();
 
-        dispatch(addTransaction({ title, amount }));
+        if (amount > 0) {
+            return dispatch(addIncome({ title, amount }));
+        } else {
+            return dispatch(addExpense({ title, amount }));
+        }
     };
 
     return (
         <form onSubmit={handleSumbit}>
-            <h3 className="text-lg border-b-2 border-gray-300">
-                Add new Transaction
-            </h3>
+            <h3 className="text-md font-bold shadow-md">Add new Transaction</h3>
 
             <div
                 className="flex flex-col
@@ -54,7 +56,9 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <Button primary>Add transaction</Button>
+                    <Button primary className="flex justify-center w-full h-7">
+                        Add transaction
+                    </Button>
                 </div>
             </div>
         </form>

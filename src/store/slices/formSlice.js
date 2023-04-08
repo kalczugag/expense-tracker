@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addIncome, addExpense } from "./transactionSlice";
 
 const formSlice = createSlice({
     name: "form",
@@ -14,6 +15,16 @@ const formSlice = createSlice({
         changeAmount(state, action) {
             state.amount = action.payload;
         },
+    },
+    extraReducers(builder) {
+        builder.addCase(addIncome, (state, action) => {
+            state.title = "";
+            state.amount = 0;
+        });
+        builder.addCase(addExpense, (state, action) => {
+            state.title = "";
+            state.amount = 0;
+        });
     },
 });
 

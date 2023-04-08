@@ -4,34 +4,29 @@ import { nanoid } from "@reduxjs/toolkit";
 const transactionSlice = createSlice({
     name: "transaction",
     initialState: {
-        data: [
-            {
-                title: "xd",
-                amount: 1200,
-                id: "a94ht98",
-            },
-            {
-                title: "xd1",
-                amount: 100,
-                id: "1093u",
-            },
-        ],
-        balance: 0,
+        data: {
+            income: [{ title: "xd", amount: 10, id: "aw4j0rt" }],
+            expense: [{ title: "xd1", amount: -12, id: "a8h4t890" }],
+        },
     },
     reducers: {
-        addTransaction(state, action) {
-            state.data.push({
+        addIncome(state, action) {
+            state.data.income.push({
                 title: action.payload.title,
                 amount: action.payload.amount,
                 id: nanoid(),
             });
-            setBalance();
         },
-        setBalance(state, action) {
-            state.balance = state.data.reduce((a, v) => (a += v.amount), 0);
+
+        addExpense(state, action) {
+            state.data.expense.push({
+                title: action.payload.title,
+                amount: action.payload.amount,
+                id: nanoid(),
+            });
         },
     },
 });
 
 export const transactionReducer = transactionSlice.reducer;
-export const { addTransaction, setBalance } = transactionSlice.actions;
+export const { addIncome, addExpense } = transactionSlice.actions;
