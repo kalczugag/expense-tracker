@@ -4,8 +4,8 @@ const transactionSlice = createSlice({
     name: "transaction",
     initialState: {
         data: {
-            income: [{ title: "Store", amount: 100, id: "xdf3i8j" }],
-            expense: [{ title: "Withdraw", amount: -50, id: "0ase4jt0" }],
+            income: [],
+            expense: [],
         },
     },
     reducers: {
