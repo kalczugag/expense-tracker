@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addTransaction } from "./transactionSlice";
+import { addTransaction } from "../thunks/addTransaction";
 
 const formSlice = createSlice({
     name: "form",

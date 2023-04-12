@@ -1,35 +1,54 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchTransactions } from "../thunks/fetchTransactions";
+import { addTransaction } from "../thunks/addTransaction";
+import { removeTransaction } from "../thunks/removeTransaction";
 
 const transactionSlice = createSlice({
     name: "transaction",
     initialState: {
-        data: {
-            income: [],
-            expense: [],
-        },
+        data: [],
+        isLoading: false,
+        error: null,
     },
-    reducers: {
-        addTransaction(state, action) {
-            const arr = action.payload.amount > 0 ? "income" : "expense";
+    extraReducers(builder) {
+        builder.addCase(fetchTransactions.isLoading, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(fetchTransactions.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        });
+        builder.addCase(fetchTransactions.error, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error;
+        });
 
-            state.data[arr].push({
-                title: action.payload.title,
-                amount: action.payload.amount,
-                id: nanoid(),
-            });
-        },
+        builder.addCase(addTransaction.isLoading, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(addTransaction.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data.push(action.payload);
+        });
+        builder.addCase(addTransaction.error, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error;
+        });
 
-        removeTransaction(state, action) {
-            const arr = action.payload.amount > 0 ? "income" : "expense";
-            console.log(arr);
-
-            const updated = state.data[arr].filter((transaction) => {
+        builder.addCase(removeTransaction.isLoading, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(removeTransaction.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data = state.data.filter((transaction) => {
                 return transaction.id !== action.payload.id;
             });
-            state.data[arr] = updated;
-        },
+        });
+        builder.addCase(removeTransaction.error, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error;
+        });
     },
 });
 
 export const transactionReducer = transactionSlice.reducer;
-export const { addTransaction, removeTransaction } = transactionSlice.actions;
