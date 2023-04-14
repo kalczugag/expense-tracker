@@ -4,7 +4,7 @@ import axios from "axios";
 const removeTransaction = createAsyncThunk(
     "transaction/remove",
     async (transaction) => {
-        await axios.post(
+        await axios.delete(
             `http://localhost:3005/transactions/${transaction.id}`
         );
 

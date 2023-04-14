@@ -11,31 +11,31 @@ const transactionSlice = createSlice({
         error: null,
     },
     extraReducers(builder) {
-        builder.addCase(fetchTransactions.isLoading, (state, action) => {
+        builder.addCase(fetchTransactions.pending, (state, action) => {
             state.isLoading = true;
         });
         builder.addCase(fetchTransactions.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data = action.payload;
         });
-        builder.addCase(fetchTransactions.error, (state, action) => {
+        builder.addCase(fetchTransactions.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         });
 
-        builder.addCase(addTransaction.isLoading, (state, action) => {
+        builder.addCase(addTransaction.pending, (state, action) => {
             state.isLoading = true;
         });
         builder.addCase(addTransaction.fulfilled, (state, action) => {
             state.isLoading = false;
             state.data.push(action.payload);
         });
-        builder.addCase(addTransaction.error, (state, action) => {
+        builder.addCase(addTransaction.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         });
 
-        builder.addCase(removeTransaction.isLoading, (state, action) => {
+        builder.addCase(removeTransaction.pending, (state, action) => {
             state.isLoading = true;
         });
         builder.addCase(removeTransaction.fulfilled, (state, action) => {
@@ -44,7 +44,7 @@ const transactionSlice = createSlice({
                 return transaction.id !== action.payload.id;
             });
         });
-        builder.addCase(removeTransaction.error, (state, action) => {
+        builder.addCase(removeTransaction.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         });

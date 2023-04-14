@@ -4,7 +4,7 @@ import HistoryListItem from "./HistoryListItem";
 const HistoryList = () => {
     const data = useSelector((state) => state.transaction.data);
 
-    const history = [...data.income, ...data.expense];
+    const history = [...data];
 
     const renderedHistory = history.map((transaction) => {
         return (

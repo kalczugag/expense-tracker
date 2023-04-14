@@ -17,7 +17,7 @@ const formSlice = createSlice({
         },
     },
     extraReducers(builder) {
-        builder.addCase(addTransaction, (state, action) => {
+        builder.addCase(addTransaction.pending, (state, action) => {
             state.title = "";
             state.amount = 0;
         });
