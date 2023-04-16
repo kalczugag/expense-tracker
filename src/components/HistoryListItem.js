@@ -1,13 +1,14 @@
-import { GoTrashcan } from "react-icons/go";
-import { useDispatch } from "react-redux";
-import { removeTransaction } from "../store";
 import classNames from "classnames";
+import Button from "./Button";
+import { GoTrashcan } from "react-icons/go";
+import { removeTransaction } from "../store";
+import { useThunk } from "../hooks/use-transaction";
 
 const HistoryListItem = ({ transaction }) => {
-    const dispatch = useDispatch();
+    const [doRemoveTransaction, isLoading, error] = useThunk(removeTransaction);
 
     const handleRemoveTransaction = () => {
-        dispatch(removeTransaction(transaction));
+        doRemoveTransaction(transaction);
     };
 
     const transactionType =
@@ -22,10 +23,12 @@ const HistoryListItem = ({ transaction }) => {
 
     return (
         <div className={classes} onClick={handleRemoveTransaction}>
-            {transaction.title}
+            {transaction.title || error}
             <div>${transaction.amount}</div>
             <div className="absolute flex items-center justify-center inset-0 opacity-0 hover:bg-gray-200 hover:opacity-80">
-                <GoTrashcan className="text-3xl" />
+                <Button loading={isLoading}>
+                    <GoTrashcan className="text-3xl" />
+                </Button>
             </div>
         </div>
     );

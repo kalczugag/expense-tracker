@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useThunk } from "../hooks/use-transaction";
 import { changeTitle, changeAmount, addTransaction } from "../store";
 import Button from "./Button";
 
 const TransactionForm = () => {
     const dispatch = useDispatch();
+    const [doAddTransaction, isLoading, error] = useThunk(addTransaction);
     const { title, amount } = useSelector((state) => {
         return {
             title: state.form.title,
@@ -23,7 +25,7 @@ const TransactionForm = () => {
         event.preventDefault();
 
         if (title && amount) {
-            dispatch(addTransaction({ title, amount }));
+            doAddTransaction({ title, amount });
         }
     };
 
@@ -58,12 +60,15 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <Button
-                        primary
-                        className="flex justify-center w-full h-8 mt-2"
-                    >
-                        Add transaction
-                    </Button>
+                    {(
+                        <Button
+                            primary
+                            loading={isLoading}
+                            className="flex justify-center w-full h-8 mt-2"
+                        >
+                            Add transaction
+                        </Button>
+                    ) || error}
                 </div>
             </div>
         </form>
