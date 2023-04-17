@@ -1,7 +1,6 @@
-# Version 1.0 without server
+# Version 1.1
 
 Live demo: https://kalczugag.github.io/expense-tracker/ \
-server will be added in next updates.
 
 # Getting Started with Create React App and Redux
 
